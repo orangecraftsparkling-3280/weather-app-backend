@@ -1,58 +1,71 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# お天気アプリ（バックエンドAPI）
 
-## About Laravel
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+お天気アプリのデータ管理およびフロントエンドへデータを提供するREST APIサーバーです。
+Dockerコンテナ上で動作し、地域の保存や重複チェックロジックを処理します。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 機能一覧
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- お気に入り・履歴場所の保存機能 (`POST /api/locations`)
+- 保存済み地域一覧の取得機能 (`GET /api/locations`)
+- `firstOrCreate` を用いた同じ地名の重複登録防止機能
+- 緯度 (latitude) / 経度 (longitude) のデータベース保持機能
+- リクエストバリデーションによるデータ品質担保
 
-## Learning Laravel
+本プロジェクトはDockerコンテナ上で動作します。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 環境構築
 
 ```bash
-composer require laravel/boost --dev
+git clone https://github.com/orangecraftsparkling-3280/weather-app-backend.git
+cd weather-app-backend
+./vendor/bin/sail up -d --build
+cp .env.example .env
+./vendor/bin/sail composer install
+./vendor/bin/sail artisan key:generate
 
-php artisan boost:install
+MySQLコンテナの起動完了までに時間がかかることがあります。
+数秒待ってから下記のコマンドを実行してください。
+
+./vendor/bin/sail artisan migrate
 ```
+## 実行環境
+- Docker環境
+- PHP 8.x
+- Laravel 10.x / 11.x
+- MySQL 8.0
+- Docker Sail環境
+## ホストOS
+- macOS / Windows / Linux（Dockerが動作する環境）
+## 推奨ブラウザ
+- Chrome / Firefox / Edge（最新バージョン）
+## 接続先一覧
+- バックエンドAPIベースURL: http://localhost:8000
+## 🛠 データベース設計
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+> 各テーブル名をクリックすると、詳細なカラム構成を確認できます。
+> <br>
 
-## Contributing
+<details>
+<summary> 📘 <code>locations</code></summary>
+<br>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| カラム名             | 型              | PK  | UK  | NN  | 備考 |
+| :------------------- | :-------------- | :-: | :-: | :-: | :--- |
+| **id**               | unsigned bigint |  ○  |     |  ○  |      |
+| **city_name**        | string          |     |     |  ○  | 登録された地名 |
+| **country_code**     | string          |     |     |  ○  | 国コード (例: JP) |
+| **latitude**         | double          |     |     |  ○  | 緯度 |
+| **longitude**        | double          |     |     |  ○  | 経度 |
+| **created_at**       | timestamp       |     |     |     |      |
+| **updated_at**       | timestamp       |     |     |     |      |
 
-## Code of Conduct
+</details>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 作成者
+- 作成者: [kazuyuki asari]
+- GitHub: https://github.com/orangecraftsparkling-3280
