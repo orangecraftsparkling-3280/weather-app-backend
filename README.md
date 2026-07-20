@@ -60,7 +60,23 @@ sleep 15
 
 ## 接続先一覧
 
-- バックエンドAPIベースURL: http://localhost:8000
+- バックエンドAPIベースURL: http://localhost
+- phpMyAdmin: http://localhost:8090
+
+## 環境のリセット・再構築
+
+動作が不安定になったり、最初から環境を作り直したい場合は以下を実行してください。
+
+```bash
+# 停止・削除とDockerキャッシュのクリーンアップ
+docker stop $(docker ps -aq) 2>/dev/null
+docker rm $(docker ps -aq) 2>/dev/null
+docker network prune -f
+
+# プロジェクトディレクトリを削除して上記「環境構築」手順を再実行
+cd ..
+rm -rf weather-app-backend
+```
 
 ## 🛠 データベース設計
 
