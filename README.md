@@ -1,4 +1,3 @@
-
 # お天気アプリ（バックエンドAPI）
 
 ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
@@ -33,18 +32,27 @@ MySQLコンテナの起動完了までに時間がかかることがあります
 
 ./vendor/bin/sail artisan migrate
 ```
+
 ## 実行環境
+
 - Docker環境
 - PHP 8.x
 - Laravel 10.x / 11.x
 - MySQL 8.0
 - Docker Sail環境
+
 ## ホストOS
+
 - macOS / Windows / Linux（Dockerが動作する環境）
+
 ## 推奨ブラウザ
+
 - Chrome / Firefox / Edge（最新バージョン）
+
 ## 接続先一覧
+
 - バックエンドAPIベースURL: http://localhost:8000
+
 ## 🛠 データベース設計
 
 > 各テーブル名をクリックすると、詳細なカラム構成を確認できます。
@@ -54,18 +62,19 @@ MySQLコンテナの起動完了までに時間がかかることがあります
 <summary> 📘 <code>locations</code></summary>
 <br>
 
-| カラム名             | 型              | PK  | UK  | NN  | 備考 |
-| :------------------- | :-------------- | :-: | :-: | :-: | :--- |
-| **id**               | unsigned bigint |  ○  |     |  ○  |      |
-| **city_name**        | string          |     |     |  ○  | 登録された地名 |
-| **country_code**     | string          |     |     |  ○  | 国コード (例: JP) |
-| **latitude**         | double          |     |     |  ○  | 緯度 |
-| **longitude**        | double          |     |     |  ○  | 経度 |
-| **created_at**       | timestamp       |     |     |     |      |
-| **updated_at**       | timestamp       |     |     |     |      |
+| カラム名         | 型              | PK  | UK  | NN  | 備考              |
+| :--------------- | :-------------- | :-: | :-: | :-: | :---------------- |
+| **id**           | unsigned bigint |  ○  |     |  ○  |                   |
+| **city_name**    | string          |     |     |  ○  | 登録された地名    |
+| **country_code** | string          |     |     |  ○  | 国コード (例: JP) |
+| **latitude**     | double          |     |     |  ○  | 緯度              |
+| **longitude**    | double          |     |     |  ○  | 経度              |
+| **created_at**   | timestamp       |     |     |     |                   |
+| **updated_at**   | timestamp       |     |     |     |                   |
 
 </details>
 
 ## 作成者
+
 - 作成者: [kazuyuki asari]
 - GitHub: https://github.com/orangecraftsparkling-3280
