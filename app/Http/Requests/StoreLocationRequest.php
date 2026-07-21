@@ -20,8 +20,8 @@ class StoreLocationRequest extends FormRequest
         return [
             'city_name' => 'required|string',
             'country_code' => 'required|string|max:2',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
         ];
     }
 
