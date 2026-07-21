@@ -42,6 +42,15 @@ sleep 15
 ./vendor/bin/sail artisan migrate:fresh --seed
 ```
 
+## テストの実行方法
+
+このプロジェクトでは PHPUnit を使用して自動テストを行っています。
+すべてのテストを実行するには、Laravel Sail 経由で以下のコマンドを実行してください。
+
+```bash
+./vendor/bin/sail artisan test
+```
+
 ## 実行環境
 
 - Docker環境
